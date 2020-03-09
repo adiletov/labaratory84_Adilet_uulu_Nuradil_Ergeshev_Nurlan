@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 
 
 router.post('/', async (req, res) => {
+
     const user = new User(req.body);
 
     try {
@@ -12,19 +13,20 @@ router.post('/', async (req, res) => {
         await user.save();
         res.send(user)
     } catch (e) {
-        console.error(e)
+        res.status(404).send({error: 'Not found'})
     }
 });
 
 router.post('/sessions', async (req, res) => {
     const user = await User.findOne({username: req.body.username});
+
     if (!user) {
-        res.status(404).send('Username or password in correct')
+        res.status(404).send('Неверный логин или пароль')
     }
 
     const isMatch = await bcrypt.compare(req.body.password, user.password);
     if (!isMatch) {
-        res.status(404).send('Username or password in correct')
+        res.status(404).send('Неверный логин или пароль')
     }
     res.send({token: user.token});
 });

@@ -12,8 +12,9 @@ const auth = async (req, res, next) => {
     }
 
     const user = await User.findOne({token});
+
     if (!user) {
-        res.status(404).send('Not found')
+        res.status(404).send('No user')
     }
 
     req.user = user;

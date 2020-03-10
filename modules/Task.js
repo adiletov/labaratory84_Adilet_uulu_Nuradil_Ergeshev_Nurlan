@@ -18,7 +18,8 @@ const newSchema = new Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        enum: ['new', 'in_progress', 'complete']
     }
 });
 

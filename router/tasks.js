@@ -14,7 +14,7 @@ router.post('/', auth, async (req, res) => {
         await task.save();
         res.send(task)
     } catch (e) {
-        res.status(404).send(e)
+        res.status(404).send({error: 'not found'})
     }
 });
 
